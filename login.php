@@ -36,7 +36,7 @@
                 </div>
                 <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" name='login'>Sign in</button>
                 <div class="text-center">
-                  <a class="small" href="#">Forgot password?</a></div>
+                  <a class="small" href="registration.php">No Account? Register Here</a></div>
               </form>
             </div>
           </div>

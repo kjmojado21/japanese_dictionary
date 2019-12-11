@@ -99,6 +99,47 @@ public function login($username,$password){
 
     }
 
+    public function followed_posts(){
+        $sql = "SELECT * FROM posts INNER JOIN followed_users ON posts.user_id = followed_users.followed_id INNER JOIN users ON posts.user_id = users.user_id ORDER BY posts.post_id DESC";
+        $result = $this->conn->query($sql);
+        if($result->num_rows>0){
+            $row = array();
+            while ($rows=$result->fetch_assoc()){
+                $row[] = $rows;
+            }return $row;
+
+        }else{
+            return FALSE;
+        }
+
+
+    }
+    public function follow_User($currentUserID,$followerID){
+        $sql = "INSERT INTO followed_users(user_id,followed_id)VALUES('$currentUserID','$followerID')";
+        $result = $this->conn->query($sql);
+        if($result == false){
+            die($this->conn->connect_error);
+
+        }else{
+            header('location: posts.php');
+
+        }
+
+    }
+    public function searchUser($fname,$lname,$username){
+        $sql = "SELECT * FROM users INNER JOIN login ON users.login_id = login.login_id WHERE users.fname LIKE'%$fname%' OR users.lname LIKE '%$lname%' OR login.username LIKE '%$username%;'";
+        $result = $this->conn->query($sql);
+        if($result->num_rows>0){
+            $row = array();
+            while($rows = $result->fetch_assoc()){
+                $row[] = $rows;
+            }return $row;
+        }else{
+            return FALSE;
+        }
+
+    }
+
 
 
 }

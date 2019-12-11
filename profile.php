@@ -27,7 +27,7 @@ $posts = $Users->getCurrentUserPost($current_user);
             /* height: 100vh; */
             border-right: solid;
             border-width: medium;
-            background-color: gray;
+            /* background-color: gray; */
 
 
 
@@ -61,12 +61,14 @@ $posts = $Users->getCurrentUserPost($current_user);
 
 <body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12 bg-dark p-5">
-               
-            </div>
-
-        </div>
+        
+                <?php 
+                    include 'navigation.php';
+                
+                ?>
+     </div>
+     <div class="container mt-5">
+           
         <div class="row">
             <div class="col-md-4">
                 <!-- simple details -->
@@ -93,7 +95,12 @@ $posts = $Users->getCurrentUserPost($current_user);
                 </div>
                 <hr>
                 <p class="lead text-center">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam odit hic rem, numquam quae voluptatem cum velit mollitia sit, dolores neque. A recusandae autem saepe modi at fugiat odio eos.
+                    <!-- Search form -->
+                    <form action="userAction.php" method="post">
+                        <div class="md-form mt-0">
+                                <input class="form-control" type="text" placeholder="Search" name="searchUser" aria-label="Search">
+                        </div>
+                    </form>
                 </p>
 
 
@@ -111,14 +118,19 @@ $posts = $Users->getCurrentUserPost($current_user);
 
                 <div class="postHolder">
                     <?php
-                    foreach ($posts as $key => $post) {
-                        echo "<div class = 'jumbotron mt-5'>";
-                        echo "<input type = 'text' class = 'form-control text-center mb-5' id='user_posts' value = '".$post['description']."' disabled>";
-
-                        echo  '<a href = "deletePost.php?post_id='.$post['post_id'].'" class = "btn btn-outline-danger float-right" role = "button"><i class=" far fa-trash-alt">Delete Post</i></a>';
-                        echo '<button type="submit" name="like" class="btn w-25 btn-outline-primary float-left">Like</button>';
-                        echo "</div>";
-                    }
+                        if($posts == true){
+                            foreach ($posts as $key => $post) {
+                                echo "<div class = 'jumbotron mt-5'>";
+                                echo "<input type = 'text' class = 'form-control text-center mb-5' id='user_posts' value = '".$post['description']."' disabled>";
+        
+                                echo  '<a href = "deletePost.php?post_id='.$post['post_id'].'" class = "btn btn-outline-danger float-right" role = "button"><i class=" far fa-trash-alt">Delete Post</i></a>';
+                                echo '<button type="submit" name="like" class="btn w-25 btn-outline-primary float-left">Like</button>';
+                                echo "</div>";
+                        }
+                    }else{
+                            echo "<div class = 'alert alert-success text-center'>WRITE YOUR FIRST POST NOW</div>";
+                        }
+                    
 
 
 
@@ -127,7 +139,19 @@ $posts = $Users->getCurrentUserPost($current_user);
             </div>
 
         </div>
-    </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 p-3">
+                   <?php 
+                    include 'footer.php';
+                   
+                   ?>
+
+                </div>
+            </div>
+        </div>
+   
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
