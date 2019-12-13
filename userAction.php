@@ -50,8 +50,33 @@ if(isset($_POST['register'])){
    
 
 }
+elseif(isset($_POST['search'])){
+    $input = $_POST['searchedName'];
+    // echo $input;
+    
+    $row = $Users->searchUser($input);
+    
+
+    if($row == false){
+        header('location:failedSearch.php');
+
+    }else{
+        header('location:searchResult.php?result='.$input);
+
+    }
 
 
+}
+elseif(isset($_POST['follow'])){
+    $followed_user = $_POST['user_id'];
+    $currentUserID = $_SESSION['login_id'];
+    $status = 'followed';
+
+    $Users->followUser($currentUserID,$currentUserID,$status);
+
+
+
+}
 
 
 

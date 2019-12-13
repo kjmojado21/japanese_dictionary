@@ -72,7 +72,7 @@ $posts = $Users->getCurrentUserPost($current_user);
         <div class="row">
             <div class="col-md-4">
                 <!-- simple details -->
-                <div class="jumbotron mt-3 w-75 mx-auto">
+               
                     <?php
 
                     if (!empty($profile['user_img'])) {
@@ -92,20 +92,23 @@ $posts = $Users->getCurrentUserPost($current_user);
 
                     ?>
 
-                </div>
+               
                 <hr>
                 <p class="lead text-center">
                     <!-- Search form -->
-                    <form action="userAction.php" method="post">
-                        <div class="md-form mt-0">
-                                <input class="form-control" type="text" placeholder="Search" name="searchUser" aria-label="Search">
-                        </div>
-                    </form>
+                    
                 </p>
 
 
             </div>
             <div class="col-md-8">
+          <div class="searchBarHolder pb-5">
+          <?php 
+                    include 'searchbar.php';
+                    
+                    
+         ?>
+          </div>
                 <form action="userAction.php" method="post">
                     <!-- detailed information -->
                     <div class="form-group">
@@ -117,6 +120,7 @@ $posts = $Users->getCurrentUserPost($current_user);
                 </form>
 
                 <div class="postHolder">
+                 
                     <?php
                         if($posts == true){
                             foreach ($posts as $key => $post) {

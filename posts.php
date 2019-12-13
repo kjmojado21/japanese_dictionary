@@ -1,14 +1,12 @@
 <?php 
 include 'userAction.php';
-$page = $_SERVER['PHP_SELF'];
-$sec = "10";
+// $page = $_SERVER['PHP_SELF'];
+// $sec = "10";
 
 $current_user = $_SESSION['login_id'];
 $Users = new Users;
 
 $profile = $Users->getOneUser($current_user);
-$posts = $Users->followed_posts();
-
 
 
 ?>
@@ -18,7 +16,7 @@ $posts = $Users->followed_posts();
     <title>Title</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'">
+    <!-- <meta http-equiv="refresh" content="<?php //echo $sec?>;URL='<?php // echo $page?>'"> -->
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -63,20 +61,9 @@ $posts = $Users->followed_posts();
                         </div>
                         <div class="col-md-9 mt-5">
                             <?php 
-                            
-                                 if($posts == false){
-                                     echo "<div class ='alert alert-warning text-center'>No Posts Available :( </div>";
-                                 }else{
-                                    foreach($posts as $key => $post){
-                                        
-                                       if($post['user_id'] == $current_user){
-                                        echo "<div class = 'alert alert-success'>".$post['description']."</div>";
-                                       }else{
-                                        echo "<div class = 'alert alert-secondary  text-right'>".$post['description']."</div>";
-                                       }
-                                    }
-                             
-                                 }
+
+                                
+                                
                             
                             ?>
                         </div>
