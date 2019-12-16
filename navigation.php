@@ -1,3 +1,7 @@
+<?php 
+
+
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,7 +15,7 @@
   </head>
   <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-  <a class="navbar-brand" href="#">JD</a>
+  <a class="navbar-brand text-uppercase" href="#">Hello <?php echo $profile['fname'] ?></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

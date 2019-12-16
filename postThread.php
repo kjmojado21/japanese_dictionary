@@ -7,8 +7,11 @@ $current_user = $_SESSION['login_id'];
 $Users = new Users;
 
 $profile = $Users->getOneUser($current_user);
-$posts = $Users->followed_posts($current_user);
+$postID = $_GET['post_id'];
 
+$post = $Users->getCertainPost($postID);
+
+$getComments = $Users->getComments($postID);
 
 ?>
 <!doctype html>
@@ -61,20 +64,41 @@ $posts = $Users->followed_posts($current_user);
                             </div>
                         </div>
                         <div class="col-md-9 mt-5">
-                            <?php 
-                                foreach($posts as $key =>$userPost){
-                                    $postID = $userPost['post_id'];
-                                    echo "<div class = jumbotron>";
-                                    echo "<div class ='lead'>".$userPost['fname']." ".$userPost['lname'].": </div>";
-                                        echo "<p class = 'lead text-center'>".$userPost['description']."</p>";
-                                        echo "<br>";
-                                        echo "<a href = 'postThread.php?post_id=$postID' class ='btn btn-outline-primary btn-block' role ='button'>See Thread</a>";
-                                    echo "</div>";
-                                }
-                                
-                                
+
+                          <?php 
+                            echo "<div class = 'alert alert-danger w-25'>POST ID: ".$post['post_id']."</div>";
+                                   
+                                    echo "<div class = 'jumbotron'>";
+                                        echo "<p class = 'lead'>Post Content: </p>";
+                                        echo "<div class = 'alert alert-success'>".$post['description']."</div>";
+                                    echo "</div>";  
+
+                                    if($getComments == false){
+                                      echo "<div class = 'alert alert-warning'>No comments Available.. Be the first one! :)</div>";
+
+                                    }else{
+                                     
+                                      // print_r($getComments);
+                                      foreach($getComments as $key => $comment){
+                                       echo "<div class = 'alert alert-primary'>".$comment['comment']."</div>";
+
+                                      }
+                                    }
+                                    
+                          ?>
+                          <form method="post" action="userAction.php">
+                              <div class="form-group">
+                                    <input type="text" name="comment" class="form-control">
+                                    <input type="hidden" name="post_id" value="<?php echo $postID ?>">
+                                    <input type="hidden" name="commentor_name" value="<?php echo $profile['fname']." ".$profile['lname']?>">
+                                    <button type="submit" name="add_comment" class="btn btn-primary mt-3 float-right">Post Comment</button>
+                              </div>
+
+                          </form>
+                          
+
                             
-                            ?>
+                            
                         </div>
                     </div>
               </div>

@@ -70,11 +70,21 @@ elseif(isset($_POST['search'])){
 elseif(isset($_POST['follow'])){
     $followed_user = $_POST['user_id'];
     $currentUserID = $_SESSION['login_id'];
-    $status = 'followed';
+    
+    
 
-    $Users->followUser($currentUserID,$currentUserID,$status);
+    $Users->followUser($currentUserID,$followed_user);
 
 
+
+}elseif(isset($_POST['add_comment'])){
+    $postID = $_POST['post_id'];
+    $commentorName = $_POST['commentor_name'];
+    $comment = $_POST['comment'];
+
+    $Users->addComment($postID,$commentorName,$comment);
+
+    header('location:postThread.php?post_id='.$postID);
 
 }
 

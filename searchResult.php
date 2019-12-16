@@ -3,6 +3,12 @@ include 'userAction.php';
 $input = $_GET['result'];
 $results = $Users->searchUser($input);
 
+$current_user = $_SESSION['login_id'];
+$Users = new Users;
+
+$profile = $Users->getOneUser($current_user);
+
+
 
 
 ?>
@@ -60,7 +66,7 @@ img{
                                 echo "<input type = 'hidden' name='user_id' value = '".$result['user_id']."'>";
                                 echo "<a href = '' role = 'button' class = 'btn btn-secondary'>Check Profile</a>";
                                
-                                echo "<button type = 'submit' name ='follow' class = 'btn btn-primary float-right'>follow</button>";
+                                echo "<button type = 'submit' name ='follow' class='btn btn-primary float-right'>follow</button>";
 
                                 
 
