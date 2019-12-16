@@ -62,14 +62,18 @@ $posts = $Users->followed_posts($current_user);
                         </div>
                         <div class="col-md-9 mt-5">
                             <?php 
-                                foreach($posts as $key =>$userPost){
-                                    $postID = $userPost['post_id'];
-                                    echo "<div class = jumbotron>";
-                                    echo "<div class ='lead'>".$userPost['fname']." ".$userPost['lname'].": </div>";
-                                        echo "<p class = 'lead text-center'>".$userPost['description']."</p>";
-                                        echo "<br>";
-                                        echo "<a href = 'postThread.php?post_id=$postID' class ='btn btn-outline-primary btn-block' role ='button'>See Thread</a>";
-                                    echo "</div>";
+                                if($posts == false){
+                                    echo "<div class = 'alert alert-warning'>No Post is Available :(</div>";
+                                }else{
+                                    foreach($posts as $key =>$userPost){
+                                        $postID = $userPost['post_id'];
+                                        echo "<div class = jumbotron>";
+                                        echo "<div class ='lead'>".$userPost['fname']." ".$userPost['lname'].": </div>";
+                                            echo "<p class = 'lead text-center'>".$userPost['description']."</p>";
+                                            echo "<br>";
+                                            echo "<a href = 'postThread.php?post_id=$postID' class ='btn btn-outline-primary btn-block' role ='button'>See Thread</a>";
+                                        echo "</div>";
+                                    }
                                 }
                                 
                                 

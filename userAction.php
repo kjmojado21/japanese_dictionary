@@ -79,10 +79,11 @@ elseif(isset($_POST['follow'])){
 
 }elseif(isset($_POST['add_comment'])){
     $postID = $_POST['post_id'];
+    $currentUser = $_SESSION['login_id'];
     $commentorName = $_POST['commentor_name'];
     $comment = $_POST['comment'];
 
-    $Users->addComment($postID,$commentorName,$comment);
+    $Users->addComment($postID,$commentorName,$comment,$currentUser);
 
     header('location:postThread.php?post_id='.$postID);
 

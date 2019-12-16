@@ -80,7 +80,13 @@ $getComments = $Users->getComments($postID);
                                      
                                       // print_r($getComments);
                                       foreach($getComments as $key => $comment){
-                                       echo "<div class = 'alert alert-primary'>".$comment['comment']."</div>";
+                                       echo "<div class = 'alert alert-primary p-4'>Commenter: ".$comment['commentor']."<br>";
+                                       echo "<p class = 'lead text-center  text-uppercase'>".$comment['comment']."</p>";
+                                     
+                                     
+
+                                       echo "</div>";
+                                     
 
                                       }
                                     }
@@ -88,7 +94,7 @@ $getComments = $Users->getComments($postID);
                           ?>
                           <form method="post" action="userAction.php">
                               <div class="form-group">
-                                    <input type="text" name="comment" class="form-control">
+                                    <input type="text" placeholder="Write a comment" name="comment" class="form-control">
                                     <input type="hidden" name="post_id" value="<?php echo $postID ?>">
                                     <input type="hidden" name="commentor_name" value="<?php echo $profile['fname']." ".$profile['lname']?>">
                                     <button type="submit" name="add_comment" class="btn btn-primary mt-3 float-right">Post Comment</button>

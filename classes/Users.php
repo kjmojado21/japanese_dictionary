@@ -180,8 +180,8 @@ public function getComments($postID){
         return false;
     }
 }
-public function addComment($postID,$commenter,$comment){
-    $sql = "INSERT INTO comments(post_id,commentor,comment)VALUES('$postID','$commenter','$comment')";
+public function addComment($postID,$commenter,$comment,$userID){
+    $sql = "INSERT INTO comments(post_id,commentor,comment,user_id)VALUES('$postID','$commenter','$comment','$userID')";
     $result = $this->conn->query($sql);
     
     if($result == FALSE){
