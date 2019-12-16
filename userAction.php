@@ -50,8 +50,44 @@ if(isset($_POST['register'])){
    
 
 }
+elseif(isset($_POST['search'])){
+    $input = $_POST['searchedName'];
+    // echo $input;
+    
+    $row = $Users->searchUser($input);
+    
+
+    if($row == false){
+        header('location:failedSearch.php');
+
+    }else{
+        header('location:searchResult.php?result='.$input);
+
+    }
 
 
+}
+elseif(isset($_POST['follow'])){
+    $followed_user = $_POST['user_id'];
+    $currentUserID = $_SESSION['login_id'];
+    
+    
+
+    $Users->followUser($currentUserID,$followed_user);
+
+
+
+}elseif(isset($_POST['add_comment'])){
+    $postID = $_POST['post_id'];
+    $currentUser = $_SESSION['login_id'];
+    $commentorName = $_POST['commentor_name'];
+    $comment = $_POST['comment'];
+
+    $Users->addComment($postID,$commentorName,$comment,$currentUser);
+
+    header('location:postThread.php?post_id='.$postID);
+
+}
 
 
 

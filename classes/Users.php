@@ -13,8 +13,14 @@ class Users extends Database{
 
                 $insertUsersResult = $this->conn->query($insertIntoUsers);
 
-                if($insertUsersResult == false){
-                    die('addtion failed'.$this->conn->connect_error);
+                if($insertUsersResult == true){
+                    $ownID = $this->conn->insert_id;
+
+                    $followSelf = "INSERT INTO followed_users(user_id,followed_id,status)VALUES('$ownID','$ownID','followed')";
+                    $insertIntoFollowTable = $this->conn->query($followSelf);
+                    if($insertIntoFollowTable == false){
+                        echo "error in inserting follow table";
+                    }
                 }else{
                     header('login.php');
                 }
@@ -74,13 +80,33 @@ public function login($username,$password){
 
     }
     public function deleteUserPost($id){
-        $sql = "DELETE FROM posts WHERE post_id = '$id'";
-        $result = $this->conn->query($sql);
-        if($result == false){
-            die($this->conn->connect_error);
-        }else{
-            header('location:profile.php');
+        $deleteComment = "DELETE FROM comments WHERE post_id = '$id'";
+        $deleteCommentResult = $this->conn->query($deleteComment);
+
+        if($deleteCommentResult == TRUE){
+            $deletePost = "DELETE FROM posts WHERE post_id = '$id'";
+            $deletePostResult = $this->conn->query($deletePost);
+
+            if($deletePostResult == false){
+                echo "CANNOT DELETE POST";
+            }else{
+                header('location:profile.php');
+
+            }
+        }elseif($deleteCommentResult == FALSE){
+            $deletePost = "DELETE FROM posts WHERE post_id = '$id'";
+            $deletePostResult = $this->conn->query($deletePost);
+            if($deletePostResult == false){
+                echo "CANNOT DELETE POST";
+            }else{
+                header('location:profile.php');
+
+            }
+            
+
         }
+
+       
 
     }
     public function uploadUserProfilePhoto($id,$name){
@@ -99,9 +125,99 @@ public function login($username,$password){
 
     }
 
+    public function followed_posts($id){
+        $sql = "SELECT * FROM followed_users INNER JOIN posts ON posts.user_id = followed_users.followed_id INNER JOIN users ON posts.user_id = users.user_id WHERE followed_users.user_id ='$id' GROUP BY posts.post_id ORDER BY posts.post_id DESC
+        ";
+        $result = $this->conn->query($sql);
+        if($result->num_rows>0){
+            $row = array();
+            while ($rows=$result->fetch_assoc()){
+                $row[] = $rows;
+            }return $row;
+
+        }else{
+            return FALSE;
+        }
+
+
+    }
+    public function searchUser($name){
+        $sql = "SELECT * FROM users INNER JOIN login ON users.login_id = login.login_id WHERE users.fname LIKE'%$name%' OR users.lname LIKE '%$name%' OR login.username LIKE '%$name%' ";
+        $result = $this->conn->query($sql);
+        if($result->num_rows>0){
+            $row = array();
+            while($rows = $result->fetch_assoc()){
+                $row[] = $rows;
+            }return $row;
+        }else{
+            return FALSE;
+        }
+
+    }
+
+
+public function followUser($userID,$followed_id){
+    $sql = "INSERT INTO followed_users(user_id,followed_id,status)VALUES('$userID','$followed_id','followed')";
+    $result = $this->conn->query($sql);
+    if($result == false){
+        die($this->conn->connect_error);
+    }else{
+        header('location:posts.php');
+    }
+
+}
+
+public function getComments($postID){
+    $sql = "SELECT * FROM comments INNER JOIN posts ON comments.post_id = posts.post_id WHERE comments.post_id = '$postID'"; 
+    $result = $this->conn->query($sql);
+
+    if($result->num_rows>0){
+        $row = array();
+        while($rows = $result->fetch_assoc()){
+            $row[] = $rows;
+        }return $row;
+    }else{
+        return false;
+    }
+}
+public function addComment($postID,$commenter,$comment,$userID){
+    $sql = "INSERT INTO comments(post_id,commentor,comment,user_id)VALUES('$postID','$commenter','$comment','$userID')";
+    $result = $this->conn->query($sql);
+    
+    if($result == FALSE){
+        die($this->conn->connect_error);
+    }else{
+        
+    }
 
 
 }
+public function getCertainPost($postID){
+    $sql = "SELECT * FROM posts WHERE post_id = '$postID'";
+    $result = $this->conn->query($sql);
+
+    if($result == false){
+        die($this->conn->connect_error);
+    }else{
+        return $result->fetch_assoc();
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
 
 
 ?>
