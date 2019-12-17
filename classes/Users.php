@@ -200,23 +200,26 @@ public function getCertainPost($postID){
         die($this->conn->connect_error);
     }else{
         return $result->fetch_assoc();
+
+
+
     }
 
+
+
 }
-
-
-
-
-
-
-
-
-
+public function checkFollower(){
 
 
 
 
 }
+
+}
+
+    
+
+
 
 
 
